@@ -1,0 +1,7 @@
+roles/java/
+roles/postgres/
+.vagrant
+.DS_Store
+*.zip
+*.tar.gz
+*.jar
