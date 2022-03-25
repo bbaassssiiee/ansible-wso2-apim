@@ -1,0 +1,31 @@
+#!/usr/bin/env ansible-playbook
+
+---
+
+- name: Install galaxy roles
+  hosts: localhost
+  connection: local
+  become: false
+  gather_facts: false
+  tasks:
+    - name: ansible-galaxy install
+      command: ansible-galaxy install -p roles -r roles/requirements.yml
+
+- name: Install database
+  hosts: database
+  become: true
+  gather_facts: true
+  roles:
+    - role: postgres
+      use_postgresql_org_repo: false
+      base_postgres_m: 10
+
+- name: Apply common configuration to wso2apim nodes
+  hosts: apim
+  serial: 1
+  gather_facts: true
+  roles:
+    - role: common
+    - role: java
+      tags:
+        - java
