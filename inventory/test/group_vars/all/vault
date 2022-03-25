@@ -1,0 +1,3 @@
+---
+vault_postgres_user: dba
+vault_postgres_pass: dba_pass

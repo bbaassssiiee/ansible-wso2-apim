@@ -1,0 +1,21 @@
+[test:vars]
+ansible_user=vagrant
+ansible_private_key_file = ~/.vagrant.d/insecure_private_key
+
+[test:children]
+apim
+wso2infra
+
+[apim]
+apim_1 ansible_host=192.168.56.18
+apim_2 ansible_host=192.168.56.19
+
+[wso2infra:children]
+database
+lb
+
+[database]
+apim_db ansible_host=192.168.56.20
+
+[lb]
+apim_lb ansible_host=192.168.56.8

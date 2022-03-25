@@ -1,0 +1,14 @@
+---
+wso2_group: wso2 # OS group to be created
+wso2_user: wso2carbon # OS user for WSO2 services
+product_name: wso2am
+product_version: 4.0.0
+target: /mnt # Product installation directory
+product_package_location: files
+backup_dir: /tmp # Artifact backup directory in the instance
+misc_file_location: "{{ product_package_location }}/misc"
+misc_file_copy_location: "{{ target }}/misc"
+security_file_location: "{{ product_package_location }}/security"
+enable_performance_tuning: false
+# If following is enabled all the sensitive information in server configurations will be encrypted.
+secure_vault_enabled: true
