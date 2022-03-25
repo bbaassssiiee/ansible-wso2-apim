@@ -1,0 +1,8 @@
+---
+roles:
+  - src: lean_delivery.java
+    name: java
+  - src: dockpack.base_postgres
+    name: postgres
+#  - src: dockpack.base_nginx
+#    name: nginx
