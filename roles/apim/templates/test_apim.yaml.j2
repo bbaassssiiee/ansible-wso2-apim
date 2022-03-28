@@ -1,0 +1,65 @@
+file:
+  /etc/systemd/system/wso2apim.service:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+port:
+  tcp:5672:
+    listening: true
+    ip:
+    - 0.0.0.0
+  tcp:8243:
+    listening: true
+    ip:
+    - 0.0.0.0
+  tcp:9099:
+    listening: true
+    ip:
+    - 0.0.0.0
+  tcp:9443:
+    listening: true
+    ip:
+    - 0.0.0.0
+  tcp:9611:
+    listening: true
+    ip:
+    - 0.0.0.0
+  tcp:9711:
+    listening: true
+    ip:
+    - 0.0.0.0
+  tcp:9763:
+    listening: true
+    ip:
+    - 0.0.0.0
+  tcp:9999:
+    listening: true
+    ip:
+    - 0.0.0.0
+  tcp:11111:
+    listening: true
+    ip:
+    - 0.0.0.0
+service:
+  wso2apim.service:
+    enabled: true
+    running: true
+user:
+  wso2carbon:
+    exists: true
+    uid: 802
+    gid: 802
+    groups:
+    - wso2
+    home: /home/wso2carbon
+    shell: /bin/bash
+group:
+  wso2:
+    exists: true
+    gid: 802
+process:
+  java:
+    running: true

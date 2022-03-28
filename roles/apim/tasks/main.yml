@@ -133,6 +133,18 @@
         group: "{{ wso2_group }}"
         mode: 0755
 
+    - name: Ensure goss directory exists
+      file:
+        path: /etc/goss.d
+        mode: 0755
+        state: directory
+
+    - name: Copy goss tests template
+      template:
+        src: test_apim.yaml.j2
+        dest: /etc/goss.d/test_apim.yaml
+        mode: 0644
+
     when: "(inventory_hostname in groups['apim'])"
     become: true
     become_method: sudo
