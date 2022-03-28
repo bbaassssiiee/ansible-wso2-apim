@@ -32,29 +32,35 @@
     - name: Copy WSO2AM service file
       template:
         src: wso2apim.service.j2
-        dest: /etc/systemd/system/wso2apim.service
+        dest: /usr/lib/systemd/system/wso2apim.service
 
     - name: Stop wso2apim as a service
       systemd:
         name: wso2apim
-        state: stopped
+        enabled: true
+        daemon_reload: true
 
-    - name: Check if deployment resource directory exists
-      stat:
-        path: "{{ carbon_home }}/repository/deployment/server"
-      register: server_dir
-
-    - name: Backup deployment resources
-      copy:
-        src: "{{ carbon_home }}/repository/deployment/server"
-        dest: "{{ server_backup_dir }}"
-        remote_src: yes
-      when: server_dir.stat.isdir is defined and server_dir.stat.isdir and backup_enabled|bool
-
-    - name: Remove existing setup
-      file:
-        path: "{{ carbon_home }}"
-        state: absent
+#    - name: Stop wso2apim as a service
+#      systemd:
+#        name: wso2apim
+#        state: stopped
+#
+#    - name: Check if deployment resource directory exists
+#      stat:
+#        path: "{{ carbon_home }}/repository/deployment/server"
+#      register: server_dir
+#
+#    - name: Backup deployment resources
+#      copy:
+#        src: "{{ carbon_home }}/repository/deployment/server"
+#        dest: "{{ server_backup_dir }}"
+#        remote_src: yes
+#      when: server_dir.stat.isdir is defined and server_dir.stat.isdir and backup_enabled|bool
+#
+#    - name: Remove existing setup
+#      file:
+#        path: "{{ carbon_home }}"
+#        state: absent
 
     - name: Unzip WSO2 API Manager Package from local source
       unarchive:
