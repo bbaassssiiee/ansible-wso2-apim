@@ -1,7 +1,9 @@
 ---
 roles:
   - src: lean_delivery.java
-    name: java
+    name: lin_java
+  - src: dockpack.base_java8
+    name: win_java
   - src: dockpack.base_postgres
     name: postgres
 #  - src: dockpack.base_nginx

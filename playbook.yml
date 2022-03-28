@@ -10,6 +10,9 @@
   tasks:
     - name: ansible-galaxy install
       command: ansible-galaxy install -p roles -r roles/requirements.yml
+      tags:
+        - galaxy
+        - roles
 
 - name: Install database
   hosts: database
@@ -26,6 +29,15 @@
   gather_facts: true
   roles:
     - role: common
-    - role: java
+      when: ansible_os_family != 'Windows'
       tags:
-        - java
+        - common
+    - role: lin_java
+      when: ansible_os_family != 'Windows'
+      tags:
+        - lin_java
+    - role: win_java
+      when: ansible_os_family == 'Windows'
+      tags:
+        - win_java
+
