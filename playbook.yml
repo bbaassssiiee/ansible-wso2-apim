@@ -40,4 +40,6 @@
       when: ansible_os_family == 'Windows'
       tags:
         - win_java
-
+    - role: apim
+      tags:
+        - apim

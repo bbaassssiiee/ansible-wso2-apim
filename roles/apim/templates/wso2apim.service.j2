@@ -3,6 +3,9 @@ Description=WSO2 API Manager - Default profile
 After=network.target
 
 [Service]
+{% if ansible_env.JAVA_HOME is defined %}
+Environment=JAVA_HOME={{ ansible_env.JAVA_HOME }}
+{% endif %}
 ExecStart={{ carbon_home }}/bin/wso2server.sh start
 ExecStop={{ carbon_home }}/bin/wso2server.sh stop
 ExecRestart={{ carbon_home }}/bin/wso2server.sh restart

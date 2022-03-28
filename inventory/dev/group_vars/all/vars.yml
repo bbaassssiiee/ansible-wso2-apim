@@ -1,0 +1,5 @@
+---
+hostname: "{{ ansible_fqdn }}"
+ports_offset: 0
+oauth_configs_revoke_api_url: "https://{{ ansible_fqdn }}:${https.nio.port}/revoke"
+...
