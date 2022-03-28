@@ -26,14 +26,6 @@ Vagrant.configure(2) do |config|
     config.vbguest.auto_update = false
   end
 
-  if Vagrant.has_plugin?("vagrant-hostmanager")
-    config.hostmanager.enabled = true
-    config.hostmanager.manage_host = true
-    config.hostmanager.manage_guest = true
-    config.hostmanager.ignore_private_ip = false
-    config.hostmanager.include_offline = true
-  end
-
   # enable ssh agent forwarding
   config.ssh.forward_agent = true
 
