@@ -1,5 +1,5 @@
 [{
-        "name": "apim_lb",
+        "name": "apim-lb",
         "autostart": true,
         "cpus": 2,
         "distro": "centos",
@@ -13,7 +13,7 @@
         "forwarded_port": "8443"
     },
     {
-        "name": "apim_1",
+        "name": "apim-1",
         "autostart": true,
         "cpus": 2,
         "distro": "centos",
@@ -27,7 +27,7 @@
         "forwarded_port": "2218"
     },
     {
-        "name": "apim_2",
+        "name": "apim-2",
         "autostart": true,
         "cpus": 2,
         "distro": "centos",
@@ -55,7 +55,7 @@
         "forwarded_port": "2220"
     },
     {
-        "name": "apim_db",
+        "name": "apim-db",
         "autostart": true,
         "cpus": 2,
         "distro": "centos",
