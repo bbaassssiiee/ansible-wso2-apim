@@ -8,7 +8,6 @@ Environment=JAVA_HOME={{ ansible_env.JAVA_HOME }}
 {% endif %}
 ExecStart={{ carbon_home }}/bin/wso2server.sh start
 ExecStop={{ carbon_home }}/bin/wso2server.sh stop
-ExecRestart={{ carbon_home }}/bin/wso2server.sh restart
 PIDFile={{ carbon_home }}/wso2carbon.pid
 User={{ wso2_user }}
 Group={{ wso2_group }}
