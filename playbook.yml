@@ -1,5 +1,5 @@
 #!/usr/bin/env ansible-playbook
-
+# WSO2 API Manager 3.2.0 install
 ---
 
 - name: Install galaxy roles
@@ -13,11 +13,15 @@
       tags:
         - galaxy
         - roles
+        - install
 
 - name: Install database
   hosts: database
   become: true
   gather_facts: true
+  tags:
+    - database
+    - install
   roles:
     - role: postgres
       use_postgresql_org_repo: false
@@ -25,7 +29,6 @@
 
 - name: Apply common configuration to wso2apim nodes
   hosts: apim
-  serial: 1
   gather_facts: true
   become: true
   roles:
@@ -33,7 +36,21 @@
       when: ansible_os_family != 'Windows'
       tags:
         - common
+        - install
     - role: java
-    - role: apim
       tags:
-        - apim
+        - java
+        - install
+
+- name: Install WSO2 API Manager
+  hosts: apim
+  serial: 1
+  gather_facts: true
+  tags:
+    - apim
+    - install
+  pre_tasks:
+    # JAVA_HOME is required for apim role
+    - debug: var=ansible_env
+  roles:
+    - role: apim
