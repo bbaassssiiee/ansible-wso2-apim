@@ -1,4 +1,4 @@
 ---
 ansible_libraries:
-  - policycoreutils-python-utils
+  - python-selinux
   - unzip

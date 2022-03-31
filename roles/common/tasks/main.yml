@@ -46,6 +46,7 @@
       package:
         name: "{{ ansible_libraries }}"
         state: present
+        update_cache: true
 
     # https://bugzilla.redhat.com/show_bug.cgi?id=1358476
     - name: SELinux configuration
