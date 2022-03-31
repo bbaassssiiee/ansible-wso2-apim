@@ -27,19 +27,13 @@
   hosts: apim
   serial: 1
   gather_facts: true
+  become: true
   roles:
     - role: common
       when: ansible_os_family != 'Windows'
       tags:
         - common
-    - role: lin_java
-      when: ansible_os_family != 'Windows'
-      tags:
-        - lin_java
-    - role: win_java
-      when: ansible_os_family == 'Windows'
-      tags:
-        - win_java
+    - role: java
     - role: apim
       tags:
         - apim

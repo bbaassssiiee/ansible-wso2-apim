@@ -1,10 +1,10 @@
 ---
 roles:
-  - src: lean_delivery.java
-    name: lin_java
-  - src: dockpack.base_java8
-    name: win_java
   - src: dockpack.base_postgres
     name: postgres
-#  - src: dockpack.base_nginx
-#    name: nginx
+  - src: dockpack.base_java8
+    name: java
+
+# If you want to use Amazon Corretto JDK or another
+# - src: lean_delivery.java
+#   name: lin_java
