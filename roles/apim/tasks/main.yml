@@ -67,6 +67,7 @@
         src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
         dest: "{{ product_dir }}"
         mode: u=rw,g=r,o=r
+      no_log: true
       when: pack_location == "local"
 
     - name: Unzip WSO2 API Manager Package from remote source
@@ -75,6 +76,7 @@
         dest: "{{ product_dir }}"
         mode: u=rw,g=r,o=r
         remote_src: yes
+      no_log: true
       when: pack_location == "remote"
 
     - name: Check if backup of deployment resources exists
