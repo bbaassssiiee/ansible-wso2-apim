@@ -1,5 +1,8 @@
 file:
-  /etc/systemd/system/wso2apim.service:
+  /etc/systemd/system/multi-user.target.wants/wso2apim.service:
+    exists: true
+    filetype: symlink
+  /usr/lib/systemd/system/wso2apim.service:
     exists: true
     mode: "0644"
     owner: root
