@@ -1,0 +1,6 @@
+---
+ansible_libraries:
+    - policycoreutils-python3
+    - policycoreutils-python-utils
+    - libsemanage-python3
+    - unzip

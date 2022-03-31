@@ -14,7 +14,11 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 ---
-  - block:
+- name: Include vars
+  # yamllint disable-line rule:line-length
+  include_vars: "{{ ansible_os_family }}{{ ansible_distribution_major_version }}.yml"
+
+- block:
     - name: Create group
       group:
         name: wso2
@@ -38,10 +42,18 @@
         - enable_performance_tuning|bool
         - performance_tuning_file_list is defined
 
-    - name: Install unzip package
+    - name: Install packages for Ansible
       package:
-        name: unzip
+        name: "{{ ansible_libraries }}"
         state: present
 
-    become: true
+    # https://bugzilla.redhat.com/show_bug.cgi?id=1358476
+    - name: SELinux configuration
+      when:
+        - ansible_os_family == 'RedHat'
+        - ansible_distribution_major_version == '8'
+        - ansible_selinux.mode == 'enforcing'
+      command: semanage permissive -a init_t
+
+  become: true
 ...
