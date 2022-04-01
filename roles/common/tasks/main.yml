@@ -37,6 +37,7 @@
       copy:
         src: "{{ item.src }}"
         dest: "{{ item.dest }}"
+        mode: '0644'
       loop: "{{ performance_tuning_file_list }}"
       when:
         - enable_performance_tuning|bool

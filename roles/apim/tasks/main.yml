@@ -14,31 +14,42 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 ---
-  - block:
-    # Set installation directory information
-    - name: Installation Information
-      set_fact:
-        product_dir: "{{ target }}/apim"
-        carbon_home: "{{ target }}/apim/{{ product_name }}-{{ product_version }}"
-        server_backup_dir: "{{ backup_dir }}/apim"
+- name: Gather environment variables
+  become: false
+  setup:
+    filter: ansible_env
 
-    # WSO2 Distribution
-    - name: Create product directory
-      file:
-        path: "{{ product_dir }}"
-        state: directory
-        mode: 0755
+- name: Assert JAVA_HOME
+  assert:
+    that: ansible_env.JAVA_HOME is defined
+    fail_msg: "JAVA_HOME is not set"
 
-    - name: Copy WSO2AM service file
-      template:
-        src: wso2apim.service.j2
-        dest: /usr/lib/systemd/system/wso2apim.service
+- block:
+  # Set installation directory information
+  - name: Installation Information
+    set_fact:
+      product_dir: "{{ target }}/apim"
+      carbon_home: "{{ target }}/apim/{{ product_name }}-{{ product_version }}"
+      server_backup_dir: "{{ backup_dir }}/apim"
 
-    - name: Stop wso2apim as a service
-      systemd:
-        name: wso2apim
-        enabled: true
-        daemon_reload: true
+  # WSO2 Distribution
+  - name: Create product directory
+    file:
+      path: "{{ product_dir }}"
+      state: directory
+      mode: 0755
+
+  - name: Copy WSO2AM service file
+    template:
+      src: wso2apim.service.j2
+      dest: /lib/systemd/system/wso2apim.service
+      mode: '0644'
+
+  - name: Stop wso2apim as a service
+    systemd:
+      name: wso2apim
+      enabled: true
+      daemon_reload: true
 
 #    - name: Stop wso2apim as a service
 #      systemd:
@@ -62,111 +73,112 @@
 #        path: "{{ carbon_home }}"
 #        state: absent
 
-    - name: Unzip WSO2 API Manager Package from local source
-      unarchive:
-        src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
-        dest: "{{ product_dir }}"
-        mode: u=rw,g=r,o=r
-      no_log: true
-      when: pack_location == "local"
+  - name: Unzip WSO2 API Manager Package from local source
+    unarchive:
+      src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+      dest: "{{ product_dir }}"
+      mode: u=rw,g=r,o=r
+    no_log: true
+    when: pack_location == "local"
 
-    - name: Unzip WSO2 API Manager Package from remote source
-      unarchive:
-        src: "{{ remote_pack }}"
-        dest: "{{ product_dir }}"
-        mode: u=rw,g=r,o=r
-        remote_src: yes
-      no_log: true
-      when: pack_location == "remote"
+  - name: Unzip WSO2 API Manager Package from remote source
+    unarchive:
+      src: "{{ remote_pack }}"
+      dest: "{{ product_dir }}"
+      mode: u=rw,g=r,o=r
+      remote_src: yes
+    no_log: true
+    when: pack_location == "remote"
 
-    - name: Check if backup of deployment resources exists
-      stat:
-        path: "{{ server_backup_dir }}"
-      register: backup_dir
+  - name: Check if backup of deployment resources exists
+    stat:
+      path: "{{ server_backup_dir }}"
+    register: backup_dir
 
-    - name: Restore deployment resources
-      copy:
-        src: "{{ server_backup_dir }}/server"
-        dest: "{{ carbon_home }}/repository/deployment"
-        remote_src: yes
-      when: backup_dir.stat.isdir is defined and backup_dir.stat.isdir and backup_enabled|bool
+  - name: Restore deployment resources
+    copy:
+      src: "{{ server_backup_dir }}/server"
+      dest: "{{ carbon_home }}/repository/deployment"
+      remote_src: yes
+      mode: preserve
+    when: backup_dir.stat.isdir is defined and backup_dir.stat.isdir and backup_enabled|bool
 
-    - name: Remove deployment resource backup
-      file:
-        path: "{{ server_backup_dir }}"
-        state: absent
+  - name: Remove deployment resource backup
+    file:
+      path: "{{ server_backup_dir }}"
+      state: absent
 
-    - name: Copy JDBC Driver
-      copy:
-        src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
-        dest: "{{ carbon_home }}/repository/components/lib"
-      when: jdbc_driver is defined
+  - name: Copy JDBC Driver
+    copy:
+      src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
+      dest: "{{ carbon_home }}/repository/components/lib"
+      mode: '0755'
+    when: jdbc_driver is defined
 
-    - name: Copy configuration templates
-      template:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      loop: "{{ config_files }}"
+  - name: Copy configuration templates
+    template:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      mode: '0644'
+    loop: "{{ config_files }}"
 
-    - name: Copy security file list for WSO2AM
-      copy:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      loop: "{{ security_file_list }}"
-      when: security_file_list is defined
+  - name: Copy security file list for WSO2AM
+    copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      mode: '0640'
+    loop: "{{ security_file_list }}"
+    when: security_file_list is defined
 
-    - name: Create miscellaneous file directory
-      file:
-        path: "{{ misc_file_copy_location }}"
-        state: directory
-        mode: 0755
-      when: misc_file_list is defined
+  - name: Create miscellaneous file directory
+    file:
+      path: "{{ misc_file_copy_location }}"
+      state: directory
+      mode: '0755'
+    when: misc_file_list is defined
 
-    - name: Copy miscellaneous resources
-      copy:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      loop: "{{ misc_file_list }}"
-      when: misc_file_list is defined
+  - name: Copy miscellaneous resources
+    copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      mode: '0644'
+    loop: "{{ misc_file_list }}"
+    when: misc_file_list is defined
 
 # Enable customization by uncommenting the following and adding the changes to the custom.yml
     # - import_tasks: custom.yml
 
-    - name: Change the owner of WSO2 directory
-      file:
-        path: "{{ target }}"
-        state: directory
-        recurse: true
-        owner: "{{ wso2_user }}"
-        group: "{{ wso2_group }}"
-        mode: 0755
+  - name: Change the owner of WSO2 directory
+    file:
+      path: "{{ target }}"
+      state: directory
+      recurse: true
+      owner: "{{ wso2_user }}"
+      group: "{{ wso2_group }}"
+      mode: 0755
 
-    - name: Ensure goss directory exists
-      file:
-        path: /etc/goss.d
-        mode: 0755
-        state: directory
+  - name: Ensure goss directory exists
+    file:
+      path: /etc/goss.d
+      mode: 0755
+      state: directory
 
-    - name: Copy goss tests template
-      template:
-        src: test_apim.yaml.j2
-        dest: /etc/goss.d/test_apim.yaml
-        mode: 0644
+  - name: Copy goss tests template
+    template:
+      src: test_apim.yaml.j2
+      dest: /etc/goss.d/test_apim.yaml
+      mode: 0644
 
-    when: "(inventory_hostname in groups['apim'])"
-    become: true
-    become_method: sudo
-    become_user: root
+  become: true
 
-  - block:
-    - include: common-tasks/secure-vault.yml
-      when: secure_vault_enabled|bool
+- block:
+  - include_tasks: secure-vault.yml
+    when: secure_vault_enabled|bool
 
-    - name: Start wso2apim as a service
-      systemd:
-        name: wso2apim
-        state: started
-        daemon_reload: yes
+  - name: Start wso2apim as a service
+    systemd:
+      name: wso2apim
+      state: started
+      daemon_reload: yes
 
-    become: true
-    become_user: root
+  become: true
