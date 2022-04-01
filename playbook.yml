@@ -18,6 +18,7 @@
 - name: Install database
   hosts: database
   become: true
+  serial: 1
   gather_facts: true
   tags:
     - database
@@ -45,12 +46,9 @@
 - name: Install WSO2 API Manager
   hosts: apim
   serial: 1
-  gather_facts: true
+  gather_facts: false
   tags:
     - apim
     - install
-  pre_tasks:
-    # JAVA_HOME is required for apim role
-    - debug: var=ansible_env
   roles:
     - role: apim
