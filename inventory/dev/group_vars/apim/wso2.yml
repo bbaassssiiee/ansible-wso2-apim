@@ -71,6 +71,6 @@ performance_tuning_file_list:
 #       dest: '{{ misc_file_copy_location }}/apimcli.zip' }
 
 # Set the location the product packages should reside in (eg: "local" in the /files directory, "remote" in a remote location)
-pack_location: local
-#pack_location: remote
+#pack_location: local
+pack_location: remote
 analytics_enabled: false
