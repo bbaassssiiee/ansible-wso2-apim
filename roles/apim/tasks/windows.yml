@@ -1,0 +1,37 @@
+---
+
+- name: Installation Information
+  set_fact:
+    product_dir: "{{ target }}/apim"
+    carbon_home: "{{ target }}/apim/{{ product_name }}-{{ product_version }}"
+    server_backup_dir: "{{ backup_dir }}/apim"
+
+ # WSO2 Distribution
+- name: Create product directory
+  win_file:
+    path: "{{ product_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Copy WSO2 API Manager Package
+  when: pack_location == "local"
+  win_copy:
+    src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+    dest: "{{ product_dir }}/"
+
+- name: Download WSO2 API Manager Package
+  when: pack_location == "remote"
+  win_get_url:
+    url: "{{ remote_pack }}"
+    dest: "{{ product_dir }}"
+  register: download
+  until: download is succeeded
+  retries: 3
+  delay: 3
+
+- name: Unzip WSO2 API Manager Package
+  win_unzip:
+    src: "{{ product_dir }}/{{ product_name }}-{{ product_version }}.zip"
+    dest: "{{ product_dir }}"
+    creates: "{{ product_dir }}/{{ product_name }}-{{ product_version }}/LICENSE.txt"
+  no_log: true

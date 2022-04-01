@@ -20,7 +20,6 @@ wso2_group: wso2 # OS group to be created
 wso2_user: wso2carbon # OS user for WSO2 services
 product_name: wso2am
 product_version: 3.2.0
-target: /mnt # Product installation directory
 product_package_location: files
 backup_dir: /tmp # Artifact backup directory in the instance
 misc_file_location: "{{ product_package_location }}/misc"

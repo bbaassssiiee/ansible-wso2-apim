@@ -1,3 +1,5 @@
+---
+target: /mnt # Product installation directory
 
 # List of configuration file templates, and the paths they should be written to
 config_files:
