@@ -1,5 +1,4 @@
-roles/lin_java/
-roles/win_java/
+roles/java/
 roles/postgres/
 .vagrant
 .DS_Store
