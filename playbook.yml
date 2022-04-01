@@ -10,6 +10,8 @@
   tasks:
     - name: ansible-galaxy install
       command: ansible-galaxy install -p roles -r roles/requirements.yml
+      args:
+        creates: roles/java/molecule
       tags:
         - galaxy
         - roles
