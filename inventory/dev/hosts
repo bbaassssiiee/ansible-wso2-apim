@@ -27,7 +27,7 @@ centos7 ansible_host=192.168.56.7
 centos8 ansible_host=192.168.56.8
 rhel7 ansible_host=192.168.56.14
 rhel8 ansible_host=192.168.56.16
-ubuntu18 ansible_host=192.168.56.18
+ubuntu18 ansible_host=192.168.56.18 ansible_python_interpreter=/usr/bin/python3
 ubuntu20 ansible_host=192.168.56.20
 
 [windows]
