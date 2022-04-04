@@ -6,3 +6,4 @@ roles/postgres/
 *.tar.gz
 *.jar
 *.log
+*.swp
