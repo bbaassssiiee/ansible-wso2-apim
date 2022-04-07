@@ -74,3 +74,4 @@ performance_tuning_file_list:
 #pack_location: local
 pack_location: remote
 analytics_enabled: false
+oauth_configs_revoke_api_url: "https://{{ ansible_fqdn }}:${https.nio.port}/revoke"

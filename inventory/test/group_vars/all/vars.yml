@@ -8,7 +8,3 @@ ports_offset: 0
 enable_performance_tuning: false
 # If following is enabled all the sensitive information in server configurations will be encrypted.
 secure_vault_enabled: true
-
-
-base_postgres_user: "{{ wso2shared_db_username }}"
-base_postgres_pass: "{{ wso2shared_db_password }}"

@@ -1,4 +1,6 @@
 ---
 base_postgres_m: 12
-base_postgres_mip: '192.168.56.20'
-base_postgres_sip: '192.168.56.21'
+base_postgres_mip: "{{ wso2shared_db_ip }}"
+# tie the vaulted vars for the postgres role
+vault_postgres_user: "{{ wso2shared_db_username }}"
+vault_postgres_pass: "{{ wso2shared_db_password }}"

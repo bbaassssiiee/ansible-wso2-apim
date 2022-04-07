@@ -29,7 +29,7 @@
       retries: 3
 
     - name: Register test files
-      shell: "ls {{ goss_test_directory }}/test_*.yaml"
+      shell: "ls {{ goss_test_directory }}/test_*"
       changed_when: false
       register: test_files
 

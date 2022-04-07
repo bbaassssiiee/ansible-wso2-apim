@@ -3,11 +3,8 @@
 admin_username: admin
 admin_password: admin
 
-stream_processor_username: ${admin.username} # Stream processor connection credentials
-stream_processor_password: ${admin.password} # Stream processor connection credentials
-stream_processor_rest_api_url: https://localhost:7444
-stream_processor_rest_api_username: ${admin.username}
-stream_processor_rest_api_password: ${admin.password}
+
+
 analytics_url_group:
   - analytics_urls:
       - tcp://analytics1.local:7612
@@ -17,9 +14,6 @@ analytics_url_group:
       - ssl://analytics2.local:7712
     event_publishing_type: loadbalance #possible types "loadbalance" or "failover"
 
-# Server URL of the Authentication service. Make sure to import the Key Manager's public certificate to WSO2 API-M's
-# client-truststore.jks. For more information, see https://docs.wso2.com/display/ADMIN44x/Creating+New+Keystores
-key_manager_server_url: https://localhost:${mgt.transport.https.port}${carbon.context}services/
 
 # API Store related configurations
 api_devportal_url: https://localhost:${mgt.transport.https.port}/devportal
