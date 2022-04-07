@@ -41,20 +41,6 @@
         "forwarded_port": "2219"
     },
     {
-        "name": "apim-analytics-worker",
-        "autostart": true,
-        "cpus": 2,
-        "distro": "centos",
-        "family": "redhat",
-        "gui": false,
-        "box": "centos/stream8",
-        "ip_addr": "192.168.56.20",
-        "memory": "4096",
-        "no_share": true,
-        "app_port": "22",
-        "forwarded_port": "2220"
-    },
-    {
         "name": "apim-db",
         "autostart": true,
         "cpus": 2,
@@ -62,7 +48,7 @@
         "family": "redhat",
         "gui": false,
         "box": "centos/stream8",
-        "ip_addr": "192.168.56.21",
+        "ip_addr": "192.168.56.20",
         "memory": "2048",
         "no_share": true,
         "app_port": "22",
