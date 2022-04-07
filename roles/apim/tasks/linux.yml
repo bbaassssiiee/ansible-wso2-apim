@@ -48,22 +48,23 @@
       path: "{{ carbon_home }}"
       state: absent
 
+  - name: Download remote_pack into files/packs
+    delegate_to: localhost
+    connection: local
+    run_once: true
+    become: false
+    get_url:
+      url: "{{ remote_pack }}"
+      dest: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+      mode: u=rw,g=r,o=r
+
   - name: Unzip WSO2 API Manager Package from local source
     unarchive:
       src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
       dest: "{{ product_dir }}"
       mode: u=rw,g=r,o=r
-    no_log: true
-    when: pack_location == "local"
-
-  - name: Unzip WSO2 API Manager Package from remote source
-    unarchive:
-      src: "{{ remote_pack }}"
-      dest: "{{ product_dir }}"
-      mode: u=rw,g=r,o=r
-      remote_src: true
-    no_log: true
-    when: pack_location == "remote"
+      remote_src: false
+    no_log: false
 
   - name: Check if backup of deployment resources exists
     stat:

@@ -1,14 +1,14 @@
 ---
-wso2_group: wso2 # OS group to be created
-wso2_user: wso2carbon # OS user for WSO2 services
 product_name: wso2am
-product_version: 4.0.0
-target: /mnt # Product installation directory
-product_package_location: files
-backup_dir: /tmp # Artifact backup directory in the instance
-misc_file_location: "{{ product_package_location }}/misc"
-misc_file_copy_location: "{{ target }}/misc"
-security_file_location: "{{ product_package_location }}/security"
+product_version: 3.2.0
+product_url: 'https://github.com/wso2/product-apim/releases/download/v'
+remote_pack: "{{ product_url ~ product_version }}/{{ product_name ~ '-' ~ product_version }}.zip"
+hostname: "{{ ansible_fqdn }}"
+ports_offset: 0
 enable_performance_tuning: false
 # If following is enabled all the sensitive information in server configurations will be encrypted.
 secure_vault_enabled: true
+
+
+base_postgres_user: "{{ wso2shared_db_username }}"
+base_postgres_pass: "{{ wso2shared_db_password }}"

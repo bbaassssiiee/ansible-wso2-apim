@@ -1,0 +1,4 @@
+---
+base_postgres_m: 12
+base_postgres_mip: '192.168.56.20'
+base_postgres_sip: '192.168.56.21'
