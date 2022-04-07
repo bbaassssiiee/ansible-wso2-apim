@@ -98,23 +98,26 @@ password = "{% if secure_vault_enabled|bool %}$secret{trust_store_password}{% el
 #[apim.cache.tags]
 #expiry_time = "2m"
 
+{% if analytics_enabled is defined %}
 [apim.analytics]
 enable = "{{ analytics_enabled }}"	
 store_api_url = "{{ stream_processor_rest_api_url }}"
 username = "{{ stream_processor_username }}"	
 password = "{{ stream_processor_password }}"
 
+{% if analytics_url_group is defined and analytics_url_group|length > 0 %}
 {% for url_group in analytics_url_group %}	
     [[apim.analytics.url_group]]	
     analytics_url =[{% for url in url_group['analytics_urls'] %}"{{ url }}"{%- if not loop.last -%},{% endif %}{% endfor %}]	
     analytics_auth_url =[{% for url in url_group['analytics_auth_urls'] %}"{{ url }}"{%- if not loop.last -%},{% endif %}{% endfor %}]
     type = "loadbalance"
 {% endfor %}
-
+{% endif %}
 #[[apim.analytics.url_group]]
 #analytics_url =["tcp://analytics1:7612","tcp://analytics2:7612"]
 #analytics_auth_url =["ssl://analytics1:7712","ssl://analytics2:7712"]
 #type = "failover"
+{% endif %}
 
 [apim.key_manager]
 service_url = "{{ key_manager_server_url }}"

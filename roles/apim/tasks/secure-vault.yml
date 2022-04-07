@@ -1,20 +1,25 @@
 
 - name: Run Secure Vault to Encrypt passwords
+  become: true
   command: "{{ carbon_home }}/bin/ciphertool.sh -Dconfigure -Dpassword={{ internal_key_store_password }}"
   environment:
-    JAVA_HOME: "{{ java_home }}"
+    JAVA_HOME: "{{ ansible_env.JAVA_HOME }}"
   args:
     chdir: "{{ carbon_home }}"
   when: secure_vault_enabled|bool
 
 - name: Creating a file with content
+  become: true
   copy:
     dest: "{{ carbon_home }}/password-tmp"
     content: |
       {{ internal_key_store_password }}
+    owner: "{{ wso2_user }}"
+    group: "{{ wso2_group }}"
     mode: '0600'
 
 - name: Change the owner of WSO2 directory
+  become: true
   file:
     path: "{{ carbon_home }}/password-tmp"
     owner: "{{ wso2_user }}"
