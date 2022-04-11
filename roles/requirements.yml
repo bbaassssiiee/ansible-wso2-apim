@@ -1,10 +1,13 @@
 ---
 roles:
+  - src: bbaassssiiee.wso2zip
+    name: wso2zip
+  - src: bbaassssiiee.wso2db
+    name: wso2db
   - src: dockpack.base_postgres
     name: base_postgres
   - src: dockpack.base_java8
     name: base_java8
-
 # If you want to use Amazon Corretto JDK or another
 # - src: lean_delivery.java
 #   name: lin_java

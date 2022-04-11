@@ -14,7 +14,7 @@
     - role: base_postgres
       use_postgresql_org_repo: false
       base_postgres_m: 12
-    - role: wso2_postgres
+    - role: wso2db
 
 - name: Apply common configuration to wso2apim nodes
   hosts: apim
@@ -47,4 +47,4 @@
     - lb
     - install
   roles:
-    - role: nginx
+    - role: base_java8

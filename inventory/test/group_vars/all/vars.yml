@@ -8,3 +8,8 @@ ports_offset: 0
 enable_performance_tuning: false
 # If following is enabled all the sensitive information in server configurations will be encrypted.
 secure_vault_enabled: true
+# Datasource configurations
+wso2shared_db_type: postgre
+wso2shared_db_url: "jdbc:postgresql://{{ wso2shared_db_ip }}:5432/WSO2SHARED_DB"
+wso2am_db_type: postgre
+wso2am_db_url: "jdbc:postgresql://{{ wso2shared_db_ip }}:5432/WSO2AM_DB"

@@ -2,3 +2,5 @@
 wso2shared_db_ip: '192.168.56.20'
 wso2shared_db_username: wso2carbon
 wso2shared_db_password: wso2carbon
+wso2am_db_username: wso2carbon
+wso2am_db_password: wso2carbon
