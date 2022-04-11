@@ -1,4 +1,7 @@
 roles/base_*/
+files/packs/wso2am-3.2.0/
+roles/wso2db/
+roles/wso2zip/
 .vagrant
 .DS_Store
 *.zip
