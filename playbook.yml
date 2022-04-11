@@ -2,21 +2,6 @@
 # WSO2 API Manager 3.2.0 install
 ---
 
-- name: Install galaxy roles
-  hosts: localhost
-  connection: local
-  become: false
-  gather_facts: false
-  tasks:
-    - name: ansible-galaxy install
-      command: ansible-galaxy install -p roles -r roles/requirements.yml
-      args:
-        creates: roles/java/molecule
-      tags:
-        - galaxy
-        - roles
-        - install
-
 - name: Install database
   hosts: database
   become: true
@@ -26,9 +11,10 @@
     - database
     - install
   roles:
-    - role: postgres
+    - role: base_postgres
       use_postgresql_org_repo: false
-      base_postgres_m: 10
+      base_postgres_m: 12
+    - role: wso2_postgres
 
 - name: Apply common configuration to wso2apim nodes
   hosts: apim
@@ -40,7 +26,7 @@
       tags:
         - common
         - install
-    - role: java
+    - role: base_java8
       tags:
         - java
         - install
@@ -53,3 +39,12 @@
     - install
   roles:
     - role: apim
+
+- name: Install Load Balancer
+  hosts: apim-lb
+  gather_facts: false
+  tags:
+    - lb
+    - install
+  roles:
+    - role: nginx
