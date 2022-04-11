@@ -1,5 +1,4 @@
-roles/java/
-roles/postgres/
+roles/base_*/
 .vagrant
 .DS_Store
 *.zip

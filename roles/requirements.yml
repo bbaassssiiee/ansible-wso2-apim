@@ -1,9 +1,9 @@
 ---
 roles:
   - src: dockpack.base_postgres
-    name: postgres
+    name: base_postgres
   - src: dockpack.base_java8
-    name: java
+    name: base_java8
 
 # If you want to use Amazon Corretto JDK or another
 # - src: lean_delivery.java
