@@ -80,7 +80,7 @@ gateway_environments:
 #       dest: '{{ misc_file_copy_location }}/apimcli.zip' }
 
 # Set the location the product packages should reside in (eg: "local" in the /files directory, "remote" in a remote location)
-#pack_location: local
+# pack_location: local
 pack_location: remote
 analytics_enabled: false
 oauth_configs_revoke_api_url: "https://{{ ansible_fqdn }}:${https.nio.port}/revoke"

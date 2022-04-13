@@ -6,7 +6,7 @@
     carbon_home: "{{ target }}/apim/{{ product_name }}-{{ product_version }}"
     server_backup_dir: "{{ backup_dir }}/apim"
 
- # WSO2 Distribution
+# WSO2 Distribution
 - name: Create product directory
   win_file:
     path: "{{ product_dir }}"

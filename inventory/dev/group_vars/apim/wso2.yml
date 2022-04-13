@@ -25,7 +25,7 @@ backup_dir: /tmp # Artifact backup directory in the instance
 misc_file_location: "{{ product_package_location }}/misc"
 misc_file_copy_location: "{{ target }}/misc"
 security_file_location: "{{ product_package_location }}/security"
-#jdbc_driver: mysql-connector-java-5.1.47-bin.jar
+# jdbc_driver: mysql-connector-java-5.1.47-bin.jar
 
 # Set backup_enabled to true to backup <carbon-home>/repository/deployment/server directory
 backup_enabled: false
@@ -37,9 +37,6 @@ performance_tuning_file_list:
       dest: '/etc/sysctl.conf' }
   - { src: '{{ product_package_location }}/system/etc/security/limits.conf',
       dest: '/etc/security/limits.conf' }
-
-
-
 
 # If custom primary keystores and trsustrores are need to be added, uncomment the below list
 # Add the required files under files/security/<product-home>/<path-to-file>
@@ -71,7 +68,7 @@ performance_tuning_file_list:
 #       dest: '{{ misc_file_copy_location }}/apimcli.zip' }
 
 # Set the location the product packages should reside in (eg: "local" in the /files directory, "remote" in a remote location)
-#pack_location: local
+# pack_location: local
 pack_location: remote
 analytics_enabled: false
 oauth_configs_revoke_api_url: "https://{{ ansible_fqdn }}:${https.nio.port}/revoke"

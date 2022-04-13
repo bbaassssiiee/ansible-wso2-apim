@@ -3,9 +3,9 @@
 base_jdk: 'java-11'
 
 
-# These are for lean_delivery.java
-#java_distribution: corretto
-#transport: fallback
-#java_tarball_install: true
-#java_major_version: 8
-#java_unlimited_policy_enabled: true
+# Note: These are for lean_delivery.java
+# java_distribution: corretto
+# transport: fallback
+# java_tarball_install: true
+# java_major_version: 8
+# java_unlimited_policy_enabled: true

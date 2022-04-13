@@ -1,5 +1,5 @@
 ---
-target: /mnt # Product installation directory
+target: /mnt  # Product installation directory
 product_package_location: files
 # List of configuration file templates, and the paths they should be written to
 config_files:
@@ -25,8 +25,8 @@ gateway_environments:
 stream_processor_rest_api_url: https://localhost:7444
 stream_processor_rest_api_username: ${admin.username}
 stream_processor_rest_api_password: ${admin.password}
-stream_processor_username: ${admin.username} # Stream processor connection credentials
-stream_processor_password: ${admin.password} # Stream processor connection credentials
+stream_processor_username: ${admin.username}  # Stream processor connection credentials
+stream_processor_password: ${admin.password}  # Stream processor connection credentials
 
 # Server URL of the Authentication service. Make sure to import the Key Manager's public certificate to WSO2 API-M's
 # client-truststore.jks. For more information, see https://docs.wso2.com/display/ADMIN44x/Creating+New+Keystores
