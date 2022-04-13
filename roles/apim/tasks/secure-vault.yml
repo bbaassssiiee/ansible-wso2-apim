@@ -1,3 +1,4 @@
+---
 
 - name: Run Secure Vault to Encrypt passwords
   become: true
