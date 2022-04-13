@@ -16,12 +16,12 @@
 #  limitations under the License.
 # ----------------------------------------------------------------------------
 
-wso2_group: wso2 # OS group to be created
-wso2_user: wso2carbon # OS user for WSO2 services
+wso2_group: wso2  # OS group to be created
+wso2_user: wso2carbon  # OS user for WSO2 services
 product_name: wso2am
 product_version: 3.2.0
 product_package_location: files
-backup_dir: /tmp # Artifact backup directory in the instance
+backup_dir: /tmp  # Artifact backup directory in the instance
 misc_file_location: "{{ product_package_location }}/misc"
 misc_file_copy_location: "{{ target }}/misc"
 security_file_location: "{{ product_package_location }}/security"
