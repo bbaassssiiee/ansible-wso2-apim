@@ -7,7 +7,7 @@ hostname: "{{ ansible_fqdn }}"
 ports_offset: 0
 enable_performance_tuning: false
 # If following is enabled all the sensitive information in server configurations will be encrypted.
-secure_vault_enabled: true
+secure_vault_enabled: false
 # Datasource configurations
 wso2shared_db_type: postgre
 wso2shared_db_url: "jdbc:postgresql://{{ wso2shared_db_ip }}:5432/WSO2SHARED_DB"
