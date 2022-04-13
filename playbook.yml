@@ -42,9 +42,11 @@
 
 - name: Install Load Balancer
   hosts: apim-lb
-  gather_facts: false
+  gather_facts: true
   tags:
     - lb
     - install
-  roles:
-    - role: base_java8
+  tasks:
+    - name: TODO
+      debug:
+        msg: TODO
