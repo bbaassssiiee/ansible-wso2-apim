@@ -3,6 +3,7 @@ files/packs/wso2am-3.2.0/
 roles/wso2db/
 roles/wso2zip/
 .vagrant
+.vscode
 .DS_Store
 *.zip
 *.tar.gz
