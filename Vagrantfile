@@ -56,9 +56,11 @@ Vagrant.configure(2) do |config|
       end
     end
   end
-  config.vm.provision "ansible" do |ansible|
+  config.vm.provision "ansible_local" do |ansible|
     ansible.compatibility_mode = "2.0"
     ansible.playbook = "playbook.yml"
+    ansible.install_mode = "pip"
+    ansible.pip_install_cmd = guest['pip_install']
     ansible.inventory_path = "inventory/" + $Stage + "/hosts"
     ansible.galaxy_role_file = "roles/requirements.yml"
     ansible.verbose = "v"
