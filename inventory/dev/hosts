@@ -19,8 +19,8 @@ linux
 windows
 
 [linux:vars]
-ansible_user=vagrant
-ansible_private_key_file = ~/.vagrant.d/insecure_private_key
+;ansible_user=vagrant
+;ansible_private_key_file = ~/.vagrant.d/insecure_private_key
 
 [linux]
 centos7 ansible_host=192.168.56.7
@@ -31,7 +31,7 @@ ubuntu18 ansible_host=192.168.56.18 ansible_python_interpreter=/usr/bin/python3
 ubuntu20 ansible_host=192.168.56.20
 
 [windows]
-windows2022 ansible_host=127.0.0.1
+windows2022 ansible_host=192.168.56.222
 
 [windows:vars]
 ansible_user=vagrant
@@ -39,6 +39,6 @@ ansible_password=vagrant
 ansible_connection=winrm
 ansible_winrm_scheme=https
 ansible_winrm_server_cert_validation=ignore
-ansible_port=55986
+ansible_port=5986
 ansible_become_method=runas
 ansible_become_user=system

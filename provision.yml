@@ -19,11 +19,11 @@
   gather_facts: true
   become: true
   tasks:
-    - nme: Common tasks for WSO2
+    - name: Common tasks for WSO2
       when: ansible_os_family != 'Windows'
       include_role:
         name: common
-        tasks_from: provision
+        tasks_from: main
       tags:
         - common
         - install
@@ -44,3 +44,5 @@
     - name: TODO
       debug:
         msg: TODO
+
+...

@@ -55,14 +55,36 @@ Vagrant.configure(2) do |config|
         virtualbox.name = guest['name']
       end
     end
+    config.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "provision.yml"
+      ansible.inventory_path = "inventory/" + $Stage + "/hosts"
+      ansible.galaxy_role_file = "roles/requirements.yml"
+      ansible.verbose = "v"
+      ansible.limit = guest['name']
+    end
   end
-  config.vm.provision "ansible_local" do |ansible|
-    ansible.compatibility_mode = "2.0"
-    ansible.playbook = "playbook.yml"
-    ansible.install_mode = "pip"
-    ansible.pip_install_cmd = guest['pip_install']
-    ansible.inventory_path = "inventory/" + $Stage + "/hosts"
-    ansible.galaxy_role_file = "roles/requirements.yml"
-    ansible.verbose = "v"
+
+  config.vm.define 'windows2022' , autostart: false do |windows|
+    windows.vm.box = "jborean93/WindowsServer2022"
+    windows.vm.network "private_network", ip: "192.168.56.222"
+    windows.vm.network :forwarded_port, host: 45986, guest: 5986
+    windows.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
+  end
+
+  # Ansible Controller VM
+  config.vm.define 'ansible' , autostart: false do |controller|
+    controller.vm.box = "ubuntu/focal64"
+    controller.vm.network "private_network", ip: "192.168.56.3"
+    controller.vm.provision :ansible_local do |ansible|
+      ansible.install        = true
+      ansible.install_mode = "pip_args_only"
+      ansible.pip_args = "-r /vagrant/requirements.txt"
+      ansible.pip_install_cmd = "sudo apt install -y python3-pip python3-winrm"
+      ansible.playbook = "provision.yml"
+      ansible.inventory_path = "inventory/" + $Stage + "/hosts"
+      ansible.galaxy_role_file = "roles/requirements.yml"
+      ansible.verbose = "v"
+    end
   end
 end

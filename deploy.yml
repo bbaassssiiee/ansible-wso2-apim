@@ -4,9 +4,9 @@
 
 - name: Install database
   hosts: database
-  become: true
+  become: false
   serial: 1
-  gather_facts: true
+  gather_facts: false
   tags:
     - database
   roles:
@@ -14,9 +14,12 @@
 
 - name: Install WSO2 API Manager
   hosts: apim
+  become: false
   gather_facts: false
   tags:
     - apim
     - install
   roles:
+    - role: wso2zip
     - role: apim
+...
