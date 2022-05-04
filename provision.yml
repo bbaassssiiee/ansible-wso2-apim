@@ -1,0 +1,46 @@
+#!/usr/bin/env ansible-playbook
+# WSO2 API Manager 3.2.0 install
+---
+- name: Install database
+  hosts: database
+  become: true
+  serial: 1
+  gather_facts: true
+  tags:
+    - database
+    - install
+  roles:
+    - role: base_postgres
+      use_postgresql_org_repo: false
+      base_postgres_m: 12
+
+- name: Apply common configuration to wso2apim nodes
+  hosts: apim
+  gather_facts: true
+  become: true
+  tasks:
+    - nme: Common tasks for WSO2
+      when: ansible_os_family != 'Windows'
+      include_role:
+        name: common
+        tasks_from: provision
+      tags:
+        - common
+        - install
+    - name: Install Java
+      include_role:
+        name: base_java8
+      tags:
+        - java
+        - install
+
+- name: Install Load Balancer
+  hosts: apim-lb
+  gather_facts: true
+  tags:
+    - lb
+    - install
+  tasks:
+    - name: TODO
+      debug:
+        msg: TODO

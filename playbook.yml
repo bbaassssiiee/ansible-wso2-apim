@@ -9,27 +9,8 @@
   gather_facts: true
   tags:
     - database
-    - install
   roles:
-    - role: base_postgres
-      use_postgresql_org_repo: false
-      base_postgres_m: 12
     - role: wso2db
-
-- name: Apply common configuration to wso2apim nodes
-  hosts: apim
-  gather_facts: true
-  become: true
-  roles:
-    - role: common
-      when: ansible_os_family != 'Windows'
-      tags:
-        - common
-        - install
-    - role: base_java8
-      tags:
-        - java
-        - install
 
 - name: Install WSO2 API Manager
   hosts: apim
@@ -39,14 +20,3 @@
     - install
   roles:
     - role: apim
-
-- name: Install Load Balancer
-  hosts: apim-lb
-  gather_facts: true
-  tags:
-    - lb
-    - install
-  tasks:
-    - name: TODO
-      debug:
-        msg: TODO
