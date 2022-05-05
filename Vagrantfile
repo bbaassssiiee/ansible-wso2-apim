@@ -5,11 +5,12 @@
 
 Vagrant.require_version ">= 2.0.0"
 
-# Select the config file from the STAGE environment variable (dev or test)
 # VM Configs are loaded from json files.
-$Stage = ENV['STAGE'] || "dev"
-# Require JSON module
 require 'json'
+
+# Select the config file from the STAGE environment variable: "dev" or "test"
+$Stage = ENV['STAGE'] || "dev"
+
 # Read JSON file with config details
 guests = JSON.parse(File.read(File.join(File.dirname(__FILE__), "inventory", $Stage + ".json")))
 
@@ -36,9 +37,9 @@ Vagrant.configure(2) do |config|
   # wait a while longer
   config.vm.boot_timeout = 1200
 
-  # disable update guest additions
+  # enable update guest additions
   if Vagrant.has_plugin?("vagrant-vbguest")
-    config.vbguest.auto_update = false
+    config.vbguest.auto_update = true
   end
 
   # enable ssh agent forwarding
@@ -76,7 +77,7 @@ Vagrant.configure(2) do |config|
     if $provisioner == "ansible"
       ansible.inventory_path = "inventory/" + $Stage + "/hosts"
       ansible.limit = $limit
-    end  
+    end
     ansible.galaxy_role_file = "roles/requirements.yml"
     ansible.verbose = "v"
   end
