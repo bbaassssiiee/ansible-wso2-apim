@@ -8,7 +8,7 @@
         "box": "centos/stream8",
         "ip_addr": "192.168.56.8",
         "memory": "1024",
-        "no_share": true,
+        "no_share": false,
         "app_port": "443",
         "forwarded_port": "8443"
     },
@@ -22,7 +22,7 @@
         "box": "centos/stream8",
         "ip_addr": "192.168.56.18",
         "memory": "4096",
-        "no_share": true,
+        "no_share": false,
         "app_port": "22",
         "forwarded_port": "2218"
     },
@@ -36,7 +36,7 @@
         "box": "centos/stream8",
         "ip_addr": "192.168.56.19",
         "memory": "4096",
-        "no_share": true,
+        "no_share": false,
         "app_port": "22",
         "forwarded_port": "2219"
     },
@@ -50,7 +50,7 @@
         "box": "centos/stream8",
         "ip_addr": "192.168.56.20",
         "memory": "2048",
-        "no_share": true,
+        "no_share": false,
         "app_port": "22",
         "forwarded_port": "2221"
     }

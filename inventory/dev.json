@@ -9,7 +9,7 @@
         "box": "centos/7",
         "ip_addr": "192.168.56.7",
         "memory": "4096",
-        "no_share": true,
+        "no_share": false,
         "app_port": "22",
         "forwarded_port": "2207"
     },
@@ -23,7 +23,7 @@
         "box": "centos/stream8",
         "ip_addr": "192.168.56.8",
         "memory": "4096",
-        "no_share": true,
+        "no_share": false,
         "app_port": "22",
         "forwarded_port": "2208"
     },
@@ -37,7 +37,7 @@
         "box": "ansiblebook/Bastion",
         "ip_addr": "192.168.56.16",
         "memory": "4096",
-        "no_share": true,
+        "no_share": false,
         "app_port": "22",
         "forwarded_port": "2216"
     },
@@ -51,7 +51,7 @@
         "box": "ubuntu/bionic64",
         "ip_addr": "192.168.56.18",
         "memory": "4096",
-        "no_share": true,
+        "no_share": false,
         "app_port": "22",
         "forwarded_port": "2218"
     },
@@ -65,7 +65,7 @@
         "box": "ubuntu/focal64",
         "ip_addr": "192.168.56.20",
         "memory": "4096",
-        "no_share": true,
+        "no_share": false,
         "app_port": "22",
         "forwarded_port": "2220"
     },
@@ -79,7 +79,7 @@
         "box": "rhel/7",
         "ip_addr": "192.168.56.14",
         "memory": "4096",
-        "no_share": true,
+        "no_share": false,
         "app_port": "80",
         "forwarded_port": "8013"
     },
@@ -91,7 +91,6 @@
         "family": "windows",
         "gui": true,
         "box": "jborean93/WindowsServer2022",
-        "pip_install": "",
         "ip_addr": "192.168.56.222",
         "memory": "4096",
         "no_share": true,
