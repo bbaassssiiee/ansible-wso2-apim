@@ -1,0 +1,12 @@
+#!/usr/bin/env ansible-playbook
+# Vagrant playbook
+
+---
+
+- name: Provision
+  import_playbook: provision.yml
+
+- name: Deploy
+  import_playbook: deploy.yml
+
+...
