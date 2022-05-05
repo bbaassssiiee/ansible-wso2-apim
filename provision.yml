@@ -33,6 +33,8 @@
       tags:
         - java
         - install
+    - name: Stop
+      meta: end_play
 
 - name: Install Load Balancer
   hosts: apim-lb
