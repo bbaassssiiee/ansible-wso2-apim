@@ -72,10 +72,12 @@ Vagrant.configure(2) do |config|
   end
   config.vm.provision $provisioner do |ansible|
     ansible.compatibility_mode = "2.0"
-    ansible.playbook = "provision.yml"
-    ansible.inventory_path = "inventory/" + $Stage + "/hosts"
+    ansible.playbook = "playbook.yml"
+    if $provisioner == "ansible"
+      ansible.inventory_path = "inventory/" + $Stage + "/hosts"
+      ansible.limit = $limit
+    end  
     ansible.galaxy_role_file = "roles/requirements.yml"
     ansible.verbose = "v"
-    ansible.limit = $limit
   end
 end
