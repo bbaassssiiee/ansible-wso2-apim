@@ -56,7 +56,7 @@ Vagrant.configure(2) do |config|
       srv.vm.network :forwarded_port, host: guest['forwarded_port'], guest: guest['app_port']
 
       # set no_share to false to enable file sharing
-      srv.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: guest['no_share']
+      srv.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: guest['no_share'], mount_options: ["dmode=775"]
       srv.vm.provider :virtualbox do |virtualbox|
         virtualbox.customize ["modifyvm", :id,
            "--audio", "none",
@@ -71,11 +71,12 @@ Vagrant.configure(2) do |config|
     end
   end
   config.vm.provision "file", source: "~/.vagrant.d/insecure_private_key", destination: "/home/vagrant/.ssh/id_rsa"
+config.vm.provision "shell", inline: "chmod 600 /home/vagrant/.ssh/id_rsa"
   config.vm.provision $provisioner do |ansible|
     ansible.compatibility_mode = "2.0"
     ansible.playbook = "playbook.yml"
     ansible.inventory_path = "inventory/" + $Stage + "/hosts"
-    ansible.galaxy_role_file = "roles/requirements.yml"
+    #ansible.galaxy_role_file = "roles/requirements.yml"
     ansible.verbose = "v"
   end
 end
