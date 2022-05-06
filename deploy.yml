@@ -14,7 +14,7 @@
 
 - name: Install WSO2 API Manager
   hosts: apim
-  become: false
+  become: true
   gather_facts: false
   tags:
     - apim
