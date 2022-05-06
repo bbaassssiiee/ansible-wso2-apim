@@ -27,7 +27,6 @@ else
   $limit = 'all'
   $provisioner = "ansible"
 end
-
 # Local PATH_SRC for mounting
 $PathSrc = ENV['PATH_SRC'] || "."
 Vagrant.configure(2) do |config|
@@ -71,13 +70,11 @@ Vagrant.configure(2) do |config|
       end
     end
   end
+  config.vm.provision "file", source: "~/.vagrant.d/insecure_private_key", destination: "/home/vagrant/.ssh/id_rsa"
   config.vm.provision $provisioner do |ansible|
     ansible.compatibility_mode = "2.0"
     ansible.playbook = "playbook.yml"
-    if $provisioner == "ansible"
-      ansible.inventory_path = "inventory/" + $Stage + "/hosts"
-      ansible.limit = $limit
-    end
+    ansible.inventory_path = "inventory/" + $Stage + "/hosts"
     ansible.galaxy_role_file = "roles/requirements.yml"
     ansible.verbose = "v"
   end
