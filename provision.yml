@@ -37,7 +37,7 @@
       meta: end_play
 
 - name: Install Load Balancer
-  hosts: apim-lb
+  hosts: lb
   gather_facts: true
   tags:
     - lb
