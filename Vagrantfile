@@ -3,7 +3,7 @@
 # To use these virtual machines install Vagrant and VirtualBox.
 # vagrant up
 
-Vagrant.require_version ">= 2.0.0"
+Vagrant.require_version ">= 2.2.0"
 
 # VM Configs are loaded from json files.
 require 'json'
@@ -14,7 +14,7 @@ $Stage = ENV['STAGE'] || "dev"
 # Read JSON file with config details
 guests = JSON.parse(File.read(File.join(File.dirname(__FILE__), "inventory", $Stage + ".json")))
 
-# Run Ansible in the VM except on Windows
+# Run Ansible in the VM except for windows2022 guest
 if ARGV[1]
   # provision only one machine if desired (ends guests.each loop)
   $limit = ARGV[1]
@@ -27,8 +27,7 @@ else
   $limit = 'all'
   $provisioner = "ansible"
 end
-# Local PATH_SRC for mounting
-$PathSrc = ENV['PATH_SRC'] || "."
+# Vagrant 2 is Ruby based
 Vagrant.configure(2) do |config|
 
   # check for updates of the base image
