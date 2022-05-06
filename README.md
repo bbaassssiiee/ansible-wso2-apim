@@ -12,6 +12,16 @@ This repository contains a Vagrantfile and JSON files in the inventory directory
    you can choose the operating system as an argument to the `vagrant up` command. i.e. `vagrant up centos8`, `vagrant up ubuntu18`, etc. `vagrant status` will show the status of the possible virtual machines.
 - "test" If you set the environment variable `STAGE` to "test", four virtual machines will be created, one for the postgresql database, one for the load balancer/reverse proxy, and the WSO2 API Manager is configured on two virtual machines. All machines run centos8 stream.
 
+## Quickstart
+
+Install VirtualBox and Vagrant, and run this command from a terminal windows (iTerm, Terminal, git-bash, xterm, etc.)
+
+```
+vagrant up centos8
+```
+
+This command will download from the internet, and it can take several minutes to complete, depending on your connection.
+
 ### VirtualBox
 https://www.virtualbox.org/wiki/Downloads
 
