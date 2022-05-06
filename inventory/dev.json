@@ -85,7 +85,7 @@
     },
     {
         "name": "windows2022",
-        "autostart": true,
+        "autostart": false,
         "cpus": 2,
         "distro": "",
         "family": "windows",

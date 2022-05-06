@@ -13,15 +13,12 @@ lb
 [database]
 
 [lb]
-; launch one of these with `vagrant up <name>`.
+
 [apim:children]
 linux
 windows
 
-[linux:vars]
-;ansible_user=vagrant
-;ansible_private_key_file = ~/.vagrant.d/insecure_private_key
-
+; launch one of these with `vagrant up <name>`.
 [linux]
 centos7 ansible_host=192.168.56.7
 centos8 ansible_host=192.168.56.8
