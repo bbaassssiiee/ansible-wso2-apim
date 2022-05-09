@@ -82,7 +82,7 @@ Vagrant.configure(2) do |config|
     ansible.compatibility_mode = "2.0"
     ansible.playbook = "playbook.yml"
     ansible.inventory_path = "inventory/" + $Stage + "/hosts"
-    #ansible.galaxy_role_file = "roles/requirements.yml"
+    ansible.galaxy_role_file = "roles/requirements.yml"
     ansible.verbose = "v"
   end
 end
