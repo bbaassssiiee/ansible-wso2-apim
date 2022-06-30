@@ -1,0 +1,27 @@
+---
+# Download & Unzip the WSO2 API Manager pack. Let's refer to it as <API-M_HOME>.
+
+- name: Download remote_pack into files/packs
+  delegate_to: localhost
+  connection: local
+  run_once: true
+  become: false
+  get_url:
+    url: "{{ remote_pack }}"
+    dest: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+    mode: u=rw,g=r,o=r
+
+# WSO2 Distribution
+- name: Create product directory
+  file:
+    path: "{{ product_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Unzip WSO2 API Manager Package from local source
+  unarchive:
+    src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+    dest: "{{ product_dir }}"
+    mode: u=rw,g=r,o=r
+    remote_src: false
+  no_log: false

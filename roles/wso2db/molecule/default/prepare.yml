@@ -1,0 +1,11 @@
+---
+- name: Prepare
+  hosts: all
+  vars:
+    base_postgres_m: 12
+    vault_postgres_user: test
+    vault_postgres_pass: test
+  tasks:
+    - name: "Include postgres"
+      include_role:
+        name: "postgres"

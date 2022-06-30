@@ -1,0 +1,5 @@
+---
+target: 'C:/Program Files/'
+# target is a platform-specfic path
+product_dir: "{{ target }}/{{ component }}"
+carbon_home: "{{ product_dir }}/{{ product_name }}-{{ product_version }}"

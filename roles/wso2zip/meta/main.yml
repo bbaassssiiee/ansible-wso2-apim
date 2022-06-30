@@ -1,0 +1,26 @@
+---
+galaxy_info:
+  author: Bas Meijer
+  namespace: bbaassssiie
+  description: Unzip WSO2 API-M
+
+  license: MIT
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Ubuntu
+      versions:
+        - bionic
+        - focal
+    - name: Windows
+      versions:
+        - all
+
+  galaxy_tags: []
+
+dependencies: []

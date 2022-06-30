@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    wso2am_db_type: postgre
+  tasks:
+    - name: "Include wso2db"
+      include_role:
+        name: "wso2db"

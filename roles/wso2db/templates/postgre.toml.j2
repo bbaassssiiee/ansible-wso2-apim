@@ -1,0 +1,15 @@
+[database.shared_db]
+type = "postgre"
+url = "jdbc:postgresql://localhost:5432/shared_db"
+username = "sharedadmin"
+password = "sharedadmin"
+driver = "org.postgresql.Driver"
+validationQuery = "SELECT 1"
+
+[database.apim_db]
+type = "postgre"
+url = "jdbc:postgresql://localhost:5432/apim_db"
+username = "apimadmin"
+password = "apimadmin"
+driver = "org.postgresql.Driver"
+validationQuery = "SELECT 1"

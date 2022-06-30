@@ -1,0 +1,35 @@
+---
+
+driver:
+  name: docker
+lint: |
+  yamllint .
+  ansible-lint
+platforms:
+  - name: centos8
+    image: quay.io/centos/centos:stream8
+    pre_build_image: false
+  - name: centos7
+    image: centos:7
+    pre_build_image: false
+  - name: ubuntu20
+    image: ubuntu:focal
+    pre_build_image: false
+  - name: ubuntu18
+    image: ubuntu:bionic
+    pre_build_image: false
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      become_method: /bin/su
+verifier:
+  name: ansible
+scenario:
+  test_sequence:
+    - lint
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - destroy

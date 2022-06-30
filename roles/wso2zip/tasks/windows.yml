@@ -1,0 +1,20 @@
+---
+
+# WSO2 Distribution
+- name: Create product directory
+  win_file:
+    path: "{{ product_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Copy WSO2 API Manager Package
+  win_copy:
+    src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+    dest: "{{ product_dir }}/"
+
+- name: Unzip WSO2 API Manager Package
+  win_unzip:
+    src: "{{ product_dir }}/{{ product_name }}-{{ product_version }}.zip"
+    dest: "{{ product_dir }}"
+    creates: "{{ product_dir }}/{{ product_name }}-{{ product_version }}/LICENSE.txt"
+  no_log: true

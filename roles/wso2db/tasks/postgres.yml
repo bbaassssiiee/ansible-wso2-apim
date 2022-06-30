@@ -1,0 +1,120 @@
+---
+
+# AM database :WSO2AM_DB.mv.db WSO2 API Manager has this database keeping its specific API-M related data.
+# Shared database :WSO2SHARED_DB.mv.db This database contains the registry and user management data.
+
+
+# CREATE DATABASE <DATABASE_NAME>;
+- name: Create databases
+  postgresql_db:
+    name: "{{ item }}"
+    encoding: UTF-8
+    lc_collate: 'en_US.UTF-8'
+    lc_ctype: 'en_US.UTF-8'
+    template: template0
+  loop:
+    - WSO2SHARED_DB
+    - WSO2AM_DB
+
+- name: Initialize the postgresql users
+  postgresql_user:
+    name: "{{ item }}"
+    # role_attr_flags: 'CREATEDB'
+  become: true
+  become_user: postgres
+  loop:
+    - "{{ wso2shared_db_username }}"
+    - "{{ wso2am_db_username }}"
+
+- name: Set the password for the wso2am_db_username user
+  postgresql_user:
+    name: "{{ wso2am_db_username }}"
+    password: "{{ wso2am_db_password }}"
+  become: true
+  become_user: postgres
+
+- name: Set the password for the wso2shared_db_username user
+  postgresql_user:
+    name: "{{ wso2shared_db_username }}"
+    password: "{{ wso2shared_db_password }}"
+  become: true
+  become_user: postgres
+
+# grant all privileges on database <DATABASE_NAME>;
+- name: Grant all privileges on WSO2SHARED_DB database
+  postgresql_privs:
+    db: postgres
+    privs: ALL
+    type: database
+    obj: WSO2SHARED_DB
+    role: "{{ wso2shared_db_username }}"
+
+- name: Grant all privileges on WSO2AM_DB database
+  postgresql_privs:
+    db: postgres
+    privs: ALL
+    type: database
+    obj: WSO2AM_DB
+    role: "{{ wso2am_db_username }}"
+
+- name: Set source
+  set_fact:
+    source: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}"
+
+# Create tables in the registry and user manager database (WSO2_SHARED_DB)
+# psql -U <USER_NAME> -d shared_db -f <API-M_HOME>/dbscripts/postgresql.sql
+
+- name: Check if table exists in WSO2SHARED_DB
+  postgresql_query:
+    db: WSO2SHARED_DB
+    query: 'SELECT COUNT(*) FROM UM_UUID_DOMAIN_MAPPER;'
+  register: registry_check
+  ignore_errors: true
+  no_log: true
+
+- name: Copy registry queries
+  when: registry_check.failed
+  copy:
+    src: "{{ source }}/dbscripts/postgresql.sql"
+    dest: "{{ sql_script_location }}/registry.sql"
+    mode: '0600'
+  register: queries
+
+- name: Run registry queries on WSO2SHARED_DB
+  when: registry_check.failed
+  postgresql_query:
+    db: WSO2SHARED_DB
+    path_to_script: "{{ sql_script_location }}/registry.sql"
+    as_single_query: false
+    encoding: UTF-8
+
+# Create tables in the apim database (WSO2AM_DB)
+- name: Check if table exists in WSO2AM_DB
+  postgresql_query:
+    db: WSO2AM_DB
+    query: 'SELECT COUNT(*) FROM AM_SCOPE_BINDING;'
+  register: apimgt_check
+  ignore_errors: true
+  no_log: true
+
+# psql -U <USER_NAME> -d apim_db -f <API-M_HOME>/dbscripts/apimgt/postgresql.sql
+- name: Copy apimgt queries
+  when: apimgt_check.failed
+  copy:
+    src: "{{ source }}/dbscripts/apimgt/postgresql.sql"
+    dest: "{{ sql_script_location }}/apimgt.sql"
+    mode: '0600'
+  register: queries
+
+# Workaround: postgresql_query cannot deal with unterminated dollar-quoted string in query.
+- name: Run apimgt queries on WSO2AM_DB
+  when: apimgt_check.failed
+  shell: "psql -U {{ wso2shared_db_username }} WSO2AM_DB < {{ sql_script_location }}/apimgt.sql"
+  no_log: true
+
+# Download the PostgreSQL JDBC driver.
+
+# Copy it to the <API-M_HOME>/repository/components/lib/ directory.
+
+# Create the datasource connection to PostgreSQL
+# https://apim.docs.wso2.com/en/3.2.0/install-and-setup/setup/setting-up-databases/changing-default-databases/changing-to-postgresql/#creating-the-datasource-connection-t

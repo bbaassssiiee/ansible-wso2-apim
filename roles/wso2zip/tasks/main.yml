@@ -1,0 +1,43 @@
+---
+# tasks file for wso2zip
+
+- name: Ensure directory files/packs
+  delegate_to: localhost
+  connection: local
+  run_once: true
+  become: false
+  file:
+    path: "{{ product_package_location }}/packs/"
+    state: directory
+    mode: '0750'
+
+- name: Download remote_pack into files/packs
+  delegate_to: localhost
+  connection: local
+  run_once: true
+  become: false
+  get_url:
+    url: "{{ remote_pack }}"
+    dest: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+    mode: u=rw,g=r,o=r
+
+- name: Gather facts
+  setup:
+  when: ansible_facts['os_family'] is not defined
+
+# Set installation directory information
+- name: Install on Linux
+  block:
+    - name: Vars for Linux
+      include_vars: linux.yml
+    - name: Tasks for Linux
+      include_tasks: linux.yml
+  when: ansible_facts['os_family'] != 'Windows'
+
+- name: Install on windows
+  block:
+    - name: Vars for Windows
+      include_vars: windows.yml
+    - name: Tasks for Windows
+      include_tasks: windows.yml
+  when: ansible_facts['os_family'] == 'Windows'

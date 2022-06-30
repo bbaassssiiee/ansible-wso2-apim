@@ -1,0 +1,29 @@
+---
+- name: Check if unzip is installed
+  stat:
+    path: /usr/bin/unzip
+  register: unzip
+
+- name: Ensure unzip is installed
+  when: not unzip.stat.exists
+  become: true
+  package:
+    name: unzip
+    state: present
+    update_cache: true
+
+# WSO2 Distribution
+- name: Ensure product directory is present
+  file:
+    path: "{{ product_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Unzip WSO2 API Manager Package
+  unarchive:
+    src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+    dest: "{{ product_dir }}"
+    creates: "{{ product_dir }}/{{ product_name }}-{{ product_version }}/LICENSE.txt"
+    mode: u=rw,g=r,o=r
+    remote_src: false
+  no_log: false

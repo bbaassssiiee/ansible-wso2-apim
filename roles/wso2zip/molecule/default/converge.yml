@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include bbaassssiie.wso2zip"
+      include_role:
+        name: "bbaassssiie.wso2zip"
